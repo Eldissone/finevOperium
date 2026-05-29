@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  passwordHash   String
+  name           String?
+  role           Role          @default(USER)
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  spreadsheets   Spreadsheet[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Organization {
+  id           String        @id @default(uuid())
+  name         String
+  sector       String?
+  users        User[]
+  spreadsheets Spreadsheet[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Spreadsheet {
+  id             String            @id @default(uuid())
+  fileName       String
+  sheetName      String?
+  rowCount       Int               @default(0)
+  columnCount    Int               @default(0)
+  status         SpreadsheetStatus @default(ANALYZING)
+  analysis       Json?
+  previewRows    Json?
+  userId         String
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId String?
+  organization   Organization?     @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([organizationId])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SpreadsheetStatus {
+  ANALYZING
+  READY
+  FAILED
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background text-text min-h-screen flex">
+  
+  <aside class="w-64 border-r border-border bg-surface flex flex-col hidden md:flex">
+    <div class="h-16 flex items-center px-6 border-b border-border">
+      <div class="h-6 w-6 rounded bg-primary flex items-center justify-center text-white font-bold text-xs">F</div>
+      <span class="font-display font-bold ml-2">Finev <span class="text-primary">Operium</span></span>
+    </div>
+    <nav class="flex-grow p-4 space-y-2">
+      <a href="/src/page/dashboard.html" class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg font-medium">
+        <span class="material-symbols-outlined text-sm">dashboard</span> Visão Geral
+      </a>
+      <a href="/src/page/upload.html" class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-highlight rounded-lg font-medium">
+        <span class="material-symbols-outlined text-sm">upload_file</span> Importar Planilha
+      </a>
+    </nav>
+    <div class="p-4 border-t border-border">
+      <button id="logout-btn" class="w-full flex items-center gap-3 px-3 py-2 text-text-muted hover:text-red-500 rounded-lg font-medium">
+        <span class="material-symbols-outlined text-sm">logout</span> Terminar Sessão
+      </button>
+    </div>
+  </aside>
+
+  <main class="flex-grow flex flex-col h-screen overflow-y-auto">
+    <header class="h-16 flex items-center justify-between px-8 border-b border-border bg-surface/80 backdrop-blur">
+      <div>
+        <h2 class="font-display font-bold text-lg">Visão Geral</h2>
+        <p class="text-xs text-text-muted" id="org-name">Organização</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="/src/page/upload.html" class="bg-primary text-white text-sm font-bold py-2 px-4 rounded-lg hidden sm:inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">add</span> Nova planilha
+        </a>
+        <span class="text-sm text-text-muted">Olá, <span id="user-name" class="font-medium text-text">—</span></span>
+      </div>
+    </header>
+    
+    <div class="p-8 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-6">
+          <div class="text-text-muted text-sm mb-2">Planilhas importadas</div>
+          <div id="stat-sheets" class="text-3xl font-display font-bold text-primary">0</div>
+        </div>
+        <div class="glass-card p-6">
+          <div class="text-text-muted text-sm mb-2">Linhas processadas</div>
+          <div id="stat-rows" class="text-3xl font-display font-bold text-primary">0</div>
+        </div>
+        <div class="glass-card p-6">
+          <div class="text-text-muted text-sm mb-2">Último sector</div>
+          <div id="stat-sector" class="text-lg font-display font-bold text-primary">—</div>
+        </div>
+      </div>
+      <section>
+        <h3 class="font-display font-bold text-lg mb-4">Planilhas recentes</h3>
+        <div id="sheets-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/dashboard.js"></script>
+</body>
+</html>

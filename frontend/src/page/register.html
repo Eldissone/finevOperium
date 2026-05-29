@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registo - Finev Operium</title>
+</head>
+<body class="bg-background text-text min-h-screen flex items-center justify-center relative overflow-hidden">
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute bottom-[20%] right-[20%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full"></div>
+  </div>
+
+  <div class="glass-card p-10 max-w-md w-full z-10 relative mx-4">
+    <div class="text-center mb-8">
+      <div class="h-12 w-12 rounded mx-auto flex items-center justify-center text-white font-bold text-xl mb-4">
+         <img src="../../src/assets/icon/Finev-Logo-Icon.png" alt="logo">
+      </div>
+      <h1 class="font-display text-2xl font-bold">Criar Conta</h1>
+      <p class="text-text-muted text-sm mt-2">Junte-se ao Finev Operium</p>
+    </div>
+
+    <form id="register-form" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium mb-1" for="name">Nome Completo</label>
+        <input type="text" id="name" required class="w-full bg-surface-highlight border border-border rounded px-4 py-2 focus:outline-none focus:border-primary" placeholder="O seu nome">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1" for="organization">Nome da Empresa</label>
+        <input type="text" id="organization" class="w-full bg-surface-highlight border border-border rounded px-4 py-2 focus:outline-none focus:border-primary" placeholder="Ex: Logística Angola Lda">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1" for="email">E-mail corporativo</label>
+        <input type="email" id="email" required class="w-full bg-surface-highlight border border-border rounded px-4 py-2 focus:outline-none focus:border-primary" placeholder="voce@empresa.com">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1" for="password">Palavra-passe</label>
+        <input type="password" id="password" required minlength="8" class="w-full bg-surface-highlight border border-border rounded px-4 py-2 focus:outline-none focus:border-primary" placeholder="Mínimo 8 caracteres">
+      </div>
+      <div id="error-msg" class="text-red-500 text-sm hidden"></div>
+      <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded">Registar</button>
+    </form>
+    
+    <p class="text-center text-sm text-text-muted mt-6">
+      Já tem conta? <a href="/src/page/login.html" class="text-primary hover:underline">Entrar</a>
+    </p>
+  </div>
+  
+  <script type="module" src="/src/js/auth.js"></script>
+</body>
+</html>

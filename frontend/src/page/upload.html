@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Importar Planilha - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background text-text min-h-screen">
+  <header class="border-b border-border bg-surface sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/src/page/dashboard.html" class="text-sm text-text-muted hover:text-text">← Painel</a>
+      <span class="font-display font-bold">Importar Planilha</span>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="text-center mb-10">
+      <h1 class="font-display text-3xl font-bold mb-3">Da planilha ao sistema</h1>
+      <p class="text-text-muted">Carregue Excel ou CSV para análise automática.</p>
+    </div>
+
+    <form id="upload-form" class="space-y-6">
+      <div id="drop-zone" class="glass-card border-2 border-dashed border-border p-12 text-center cursor-pointer hover:border-primary/50">
+        <span class="material-symbols-outlined text-5xl text-primary mb-4">upload_file</span>
+        <p class="font-medium">Arraste ou clique para seleccionar</p>
+        <p class="text-sm text-text-muted mt-1">.xlsx, .xls ou .csv</p>
+        <input type="file" id="file" accept=".xlsx,.xls,.csv" class="hidden" required />
+      </div>
+      <p id="upload-status" class="text-center text-sm text-text-muted"></p>
+      <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-lg">Analisar com Operium</button>
+    </form>
+    <div id="analysis-result" class="mt-10 hidden"></div>
+  </main>
+
+  <script type="module" src="/src/js/upload.js"></script>
+</body>
+</html>

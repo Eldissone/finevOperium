@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background text-text min-h-screen">
+  <header class="border-b border-border bg-surface sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between">
+      <a href="/src/page/dashboard.html" class="text-sm text-text-muted hover:text-text">← Painel</a>
+      <a href="/src/page/upload.html" class="text-sm text-primary">Nova importação</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10 space-y-10">
+    <div>
+      <h1 id="sheet-title" class="font-display text-2xl font-bold">A carregar...</h1>
+      <p id="sheet-meta" class="text-text-muted text-sm mt-2"></p>
+    </div>
+    <section>
+      <h2 class="font-display font-bold mb-4">Colunas</h2>
+      <div id="columns-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+    <div class="grid md:grid-cols-2 gap-8">
+      <section><h2 class="font-display font-bold mb-4">KPIs sugeridos</h2><ul id="kpis-list" class="space-y-2"></ul></section>
+      <section><h2 class="font-display font-bold mb-4">Workflows</h2><ul id="workflows-list" class="space-y-3"></ul></section>
+    </div>
+    <section>
+      <h2 class="font-display font-bold mb-4">Pré-visualização</h2>
+      <div id="preview-table" class="glass-card p-4 overflow-x-auto"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/js/spreadsheet.js"></script>
+</body>
+</html>
