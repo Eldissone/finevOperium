@@ -92,6 +92,11 @@ export function analyzeWorkbook(buffer, fileName) {
       })),
       generatedAt: new Date().toISOString(),
     },
+    allRows: dataRows.map((row) => {
+      const record = {};
+      headerRow.forEach((header, i) => { record[header] = row[i] ?? null; });
+      return record;
+    }),
     previewRows: dataRows.slice(0, 10).map((row) => {
       const record = {};
       headerRow.forEach((header, i) => { record[header] = row[i] ?? null; });

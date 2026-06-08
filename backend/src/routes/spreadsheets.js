@@ -1,14 +1,8 @@
 import express from 'express';
-import multer from 'multer';
 import prisma from '../lib/db.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import { analyzeWorkbook } from '../lib/spreadsheetAnalyzer.js';
 
 const router = express.Router();
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 },
-});
 
 router.use(authMiddleware);
 
@@ -23,50 +17,54 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const spreadsheet = await prisma.spreadsheet.findFirst({
     where: { id: req.params.id, userId: req.user.id },
+    include: { appConfig: true },
   });
   if (!spreadsheet) return res.status(404).json({ error: 'Planilha não encontrada.' });
   res.json({ spreadsheet });
 });
 
-router.post('/upload', (req, res, next) => {
-  upload.single('file')(req, res, (err) => {
-    if (err) return res.status(400).json({ error: err.message });
-    next();
-  });
-}, async (req, res) => {
+// Upload endpoint removed: spreadsheet import handled elsewhere or disabled.
+
+router.put('/:id', async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: 'Ficheiro em falta.' });
+    const { fileName } = req.body;
+    if (!fileName?.trim()) {
+      return res.status(400).json({ error: 'Nome da planilha é obrigatório.' });
+    }
 
-    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-    const result = analyzeWorkbook(req.file.buffer, req.file.originalname);
+    const existing = await prisma.spreadsheet.findFirst({
+      where: { id: req.params.id, userId: req.user.id },
+      include: { appConfig: true },
+    });
+    if (!existing) return res.status(404).json({ error: 'Planilha não encontrada.' });
 
-    const spreadsheet = await prisma.spreadsheet.create({
-      data: {
-        fileName: result.fileName,
-        sheetName: result.sheetName,
-        rowCount: result.rowCount,
-        columnCount: result.columnCount,
-        status: 'READY',
-        analysis: result.analysis,
-        previewRows: result.previewRows,
-        userId: user.id,
-        organizationId: user.organizationId,
-      },
+    const spreadsheet = await prisma.spreadsheet.update({
+      where: { id: existing.id },
+      data: { fileName: fileName.trim() },
+      include: { appConfig: true },
     });
 
-    res.status(201).json({
-      message: 'Planilha analisada com sucesso.',
-      spreadsheet: {
-        id: spreadsheet.id,
-        fileName: spreadsheet.fileName,
-        rowCount: spreadsheet.rowCount,
-        columnCount: spreadsheet.columnCount,
-        analysis: spreadsheet.analysis,
-      },
-    });
+    // System name conversion removed: do not update appConfig.systemName/dashboardSetup here.
+
+    res.json({ message: 'Planilha actualizada.', spreadsheet });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ error: error.message || 'Erro ao processar planilha' });
+    res.status(500).json({ error: 'Erro ao actualizar planilha.' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const existing = await prisma.spreadsheet.findFirst({
+      where: { id: req.params.id, userId: req.user.id },
+    });
+    if (!existing) return res.status(404).json({ error: 'Planilha não encontrada.' });
+
+    await prisma.spreadsheet.delete({ where: { id: existing.id } });
+    res.json({ message: 'Planilha eliminada.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao eliminar planilha.' });
   }
 });
 

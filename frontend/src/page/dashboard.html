@@ -17,9 +17,7 @@
       <a href="/src/page/dashboard.html" class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg font-medium">
         <span class="material-symbols-outlined text-sm">dashboard</span> Visão Geral
       </a>
-      <a href="/src/page/upload.html" class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-highlight rounded-lg font-medium">
-        <span class="material-symbols-outlined text-sm">upload_file</span> Importar Planilha
-      </a>
+      <!-- Import feature removed -->
     </nav>
     <div class="p-4 border-t border-border">
       <button id="logout-btn" class="w-full flex items-center gap-3 px-3 py-2 text-text-muted hover:text-red-500 rounded-lg font-medium">
@@ -35,9 +33,7 @@
         <p class="text-xs text-text-muted" id="org-name">Organização</p>
       </div>
       <div class="flex items-center gap-4">
-        <a href="/src/page/upload.html" class="bg-primary text-white text-sm font-bold py-2 px-4 rounded-lg hidden sm:inline-flex items-center gap-1">
-          <span class="material-symbols-outlined text-sm">add</span> Nova planilha
-        </a>
+        <!-- Import feature removed -->
         <span class="text-sm text-text-muted">Olá, <span id="user-name" class="font-medium text-text">—</span></span>
       </div>
     </header>
@@ -58,11 +54,32 @@
         </div>
       </div>
       <section>
-        <h3 class="font-display font-bold text-lg mb-4">Planilhas recentes</h3>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-bold text-lg">Planilhas recentes</h3>
+          <p id="sheets-status" class="text-sm text-text-muted"></p>
+        </div>
         <div id="sheets-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </section>
     </div>
   </main>
+
+  <!-- Modal renomear -->
+  <div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+    <div class="glass-card w-full max-w-md p-6 space-y-4" role="dialog" aria-labelledby="edit-modal-title">
+      <h3 id="edit-modal-title" class="font-display font-bold text-lg">Renomear planilha</h3>
+      <form id="edit-form" class="space-y-4">
+        <input type="hidden" id="edit-sheet-id" />
+        <div>
+          <label for="edit-file-name" class="block text-sm font-medium mb-1">Nome</label>
+          <input type="text" id="edit-file-name" required class="w-full bg-surface-highlight border border-border rounded-lg px-4 py-2 focus:outline-none focus:border-primary" />
+        </div>
+        <div class="flex gap-3 justify-end pt-2">
+          <button type="button" id="edit-cancel" class="px-4 py-2 border border-border rounded-lg font-semibold hover:bg-surface-highlight">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script type="module" src="/src/js/dashboard.js"></script>
 </body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App: Formulário - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background text-text min-h-screen">
+  <header class="border-b border-border bg-surface sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" id="back-link" class="text-sm text-text-muted hover:text-text">← Voltar aos Detalhes</a>
+      <span class="font-display font-bold">Adicionar Registo</span>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-6 py-12">
+    <div class="text-center mb-10">
+      <h1 class="font-display text-3xl font-bold mb-3" id="form-title">A carregar...</h1>
+      <p class="text-text-muted" id="form-subtitle">Preencha os dados abaixo para adicionar um novo registo à base de dados.</p>
+    </div>
+
+    <form id="dynamic-form" class="glass-card p-8 space-y-6">
+      <div id="form-fields" class="space-y-5">
+        <!-- Campos gerados dinamicamente entrarão aqui -->
+      </div>
+      
+      <div id="status-msg" class="text-sm hidden text-center"></div>
+      
+      <div class="pt-4 border-t border-border flex justify-end">
+        <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">save</span> Salvar Registo
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <script type="module" src="/src/js/app-form.js"></script>
+</body>
+</html>

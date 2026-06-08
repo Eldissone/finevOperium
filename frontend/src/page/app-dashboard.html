@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App: Dashboard - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-background text-text min-h-screen">
+
+  <header class="border-b border-border bg-surface sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="#" id="back-link" class="text-sm text-text-muted hover:text-text">← Detalhes</a>
+      <h1 class="font-display font-bold text-lg truncate" id="dash-title">A carregar...</h1>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <a href="#" id="manage-link" class="text-sm text-text-muted hover:text-primary font-semibold hidden sm:inline">Gestão</a>
+        <a href="#" id="form-link" class="bg-primary text-white text-sm font-bold py-2 px-4 rounded-lg flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">add</span> Novo Registo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Row -->
+  <div class="max-w-7xl mx-auto px-6 pt-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5" id="stats-row"></div>
+  </div>
+
+  <!-- Charts + Table -->
+  <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- Chart 1: Bar -->
+    <div class="glass-card p-6">
+      <h2 class="font-display font-bold mb-4" id="chart1-title">Distribuição</h2>
+      <div class="relative h-64">
+        <canvas id="chart-bar"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 2: Doughnut -->
+    <div class="glass-card p-6">
+      <h2 class="font-display font-bold mb-4" id="chart2-title">Composição</h2>
+      <div class="relative h-64 flex items-center justify-center">
+        <canvas id="chart-doughnut"></canvas>
+      </div>
+    </div>
+
+    <!-- Records Table -->
+    <div class="glass-card p-6 lg:col-span-2">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display font-bold">Registos</h2>
+        <div class="flex gap-2">
+          <input id="search-input" type="text" placeholder="Pesquisar..." class="text-sm bg-surface-highlight border border-border rounded px-3 py-1.5 focus:outline-none focus:border-primary">
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm" id="records-table">
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <div id="table-empty" class="text-center text-text-muted py-8 hidden">
+        Sem registos. <a id="empty-form-link" href="#" class="text-primary hover:underline">Adiciona o primeiro</a>.
+      </div>
+      <div class="mt-4 flex justify-between items-center text-sm text-text-muted" id="pagination-bar">
+        <span id="page-info"></span>
+        <div class="flex gap-2">
+          <button id="btn-prev" class="px-3 py-1 rounded border border-border hover:bg-surface-highlight disabled:opacity-40">Anterior</button>
+          <button id="btn-next" class="px-3 py-1 rounded border border-border hover:bg-surface-highlight disabled:opacity-40">Próximo</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="/src/js/app-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+---
+description: Padrão CRUD do Operium — API, dashboard e planilhas
+globs: frontend/src/**/*.{js,html},backend/src/routes/**/*.js
+alwaysApply: false
+---
+
+# CRUD Operium
+
+## Stack
+
+- **Frontend**: páginas HTML + módulos JS (`apiFetch`, `requireAuth` de `frontend/src/js/api.js`)
+- **Backend**: Express + Prisma; sempre filtrar por `userId: req.user.id`
+
+## Endpoints de planilhas
+
+| Acção | Método | Rota |
+|-------|--------|------|
+| Listar | GET | `/api/spreadsheets` |
+| Ler | GET | `/api/spreadsheets/:id` |
+| Criar | POST | `/api/spreadsheets/upload` (multipart) |
+| Actualizar | PUT | `/api/spreadsheets/:id` `{ fileName }` |
+| Apagar | DELETE | `/api/spreadsheets/:id` |
+
+Registos: `/api/spreadsheets/:spreadsheetId/records` (GET, POST, PUT, DELETE).
+
+## Dashboard (`dashboard.html`)
+
+- **Create**: link «Nova planilha» → `upload.html`
+- **Read**: cards em `#sheets-list` via `GET /api/dashboard`
+- **Update**: modal «Renomear» → `PUT /api/spreadsheets/:id`
+- **Delete**: confirmação → `DELETE /api/spreadsheets/:id`; recarregar lista após sucesso
+
+```javascript
+// ✅ Acções delegadas no container (evita re-bind após render)
+sheetsList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  if (btn.dataset.action === 'delete') {
+    await apiFetch(`/api/spreadsheets/${btn.dataset.id}`, { method: 'DELETE' });
+    await reloadDashboard();
+  }
+});
+```
+
+## Regras
+
+- UI e mensagens em **português** (pt-AO/pt-BR)
+- Botões destrutivos pedem `confirm()` antes do DELETE
+- Após mutação, actualizar stats + lista sem reload da página
+- Renomear planilha sincroniza `AppConfig.systemName` e `dashboardSetup.appTitle` se existir
+- Badge **Publicado** / **Rascunho** conforme `appConfig.isPublished`

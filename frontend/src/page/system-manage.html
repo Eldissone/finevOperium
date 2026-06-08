@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão do Sistema - Finev Operium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background text-text min-h-screen">
+  <header class="border-b border-border bg-surface sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="#" id="back-link" class="text-sm text-text-muted hover:text-text">← Voltar</a>
+      <h1 class="font-display font-bold">Gestão do Sistema</h1>
+      <a href="#" id="open-app-link" class="text-sm text-primary font-semibold">Abrir app →</a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <nav class="flex gap-2 mb-8 border-b border-border overflow-x-auto">
+      <button type="button" data-tab="theme" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-primary text-primary">Tema</button>
+      <button type="button" data-tab="dashboard" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-text-muted">Dashboard</button>
+      <button type="button" data-tab="form" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-text-muted">Formulário</button>
+      <button type="button" data-tab="workflows" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-text-muted">Workflows</button>
+    </nav>
+
+    <div id="tab-theme" class="tab-panel glass-card p-6 space-y-4">
+      <input type="text" id="m-system-name" class="w-full bg-surface-highlight border border-border rounded-lg px-4 py-2" placeholder="Nome do sistema" />
+      <div class="flex gap-3 items-center">
+        <input type="color" id="m-primary-color" class="w-12 h-10 rounded" />
+        <input type="text" id="m-primary-color-text" class="flex-1 bg-surface-highlight border border-border rounded-lg px-4 py-2 font-mono text-sm" />
+      </div>
+      <select id="m-theme-mode" class="w-full bg-surface-highlight border border-border rounded-lg px-4 py-2">
+        <option value="light">Claro</option>
+        <option value="dark">Escuro</option>
+      </select>
+      <select id="m-theme-font" class="w-full bg-surface-highlight border border-border rounded-lg px-4 py-2">
+        <option value="everett">TWK Everett</option>
+        <option value="inter">Inter</option>
+        <option value="system">Sistema</option>
+      </select>
+    </div>
+
+    <div id="tab-dashboard" class="tab-panel hidden glass-card p-6 space-y-4">
+      <input type="text" id="m-dash-title" class="w-full bg-surface-highlight border border-border rounded-lg px-4 py-2" placeholder="Título do dashboard" />
+      <ul id="m-kpis" class="space-y-2"></ul>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <label class="text-sm"><input type="checkbox" id="m-bar-enabled" /> Gráfico barras</label>
+        <select id="m-bar-column" class="w-full bg-surface-highlight border border-border rounded px-3 py-2 text-sm"></select>
+        <label class="text-sm"><input type="checkbox" id="m-doughnut-enabled" /> Gráfico circular</label>
+        <select id="m-doughnut-column" class="w-full bg-surface-highlight border border-border rounded px-3 py-2 text-sm"></select>
+      </div>
+    </div>
+
+    <div id="tab-form" class="tab-panel hidden glass-card p-6">
+      <div id="m-fields" class="space-y-2"></div>
+    </div>
+
+    <div id="tab-workflows" class="tab-panel hidden glass-card p-6">
+      <div class="flex justify-between mb-4">
+        <h2 class="font-semibold">Workflows activos</h2>
+        <button type="button" id="m-add-workflow" class="text-sm text-primary font-bold">+ Novo</button>
+      </div>
+      <ul id="m-workflows-list" class="space-y-3"></ul>
+    </div>
+
+    <div class="mt-8 flex gap-3">
+      <button type="button" id="btn-save-config" class="bg-primary text-white font-bold py-3 px-8 rounded-lg">Guardar alterações</button>
+      <p id="manage-status" class="text-sm text-text-muted self-center"></p>
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/system-manage.js"></script>
+</body>
+</html>

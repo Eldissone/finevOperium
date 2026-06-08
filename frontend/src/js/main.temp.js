@@ -42,6 +42,49 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+const spans = document.querySelectorAll("#text span");
+
+let lastIndex = spans.length - 1;
+
+// inicia na última letra
+activateEffect(lastIndex);
+
+spans.forEach((span, index) => {
+
+  span.addEventListener("mousemove", () => {
+    lastIndex = index;
+    activateEffect(index);
+  });
+
+});
+
+// quando sair do texto inteiro
+document.querySelector("#text").addEventListener("mouseleave", () => {
+  activateEffect(lastIndex);
+});
+
+function activateEffect(index){
+
+  // limpa classes
+  spans.forEach(s => {
+    s.className = "";
+  });
+
+  // letra principal
+  spans[index]?.classList.add("active");
+
+  // direita
+  spans[index + 1]?.classList.add("level-1");
+  spans[index + 2]?.classList.add("level-2");
+  spans[index + 3]?.classList.add("level-3");
+
+  // esquerda
+  spans[index - 1]?.classList.add("level-1");
+  spans[index - 2]?.classList.add("level-2");
+  spans[index - 3]?.classList.add("level-3");
+}
+
+
 // Header: tornar transparente no topo e branco ao rolar para baixo
 (function setupHeaderScroll() {
   const header = document.querySelector('header');
@@ -60,66 +103,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   io.observe(hero);
 })();
-
-const textElement = document.querySelector('#text');
-if (textElement) {
-  const nodes = Array.from(textElement.childNodes);
-  textElement.innerHTML = '';
-
-  const spans = [];
-  nodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent.split('').forEach((char) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        if (char === ' ') {
-          span.style.display = 'inline-block';
-          span.style.width = '0.35ch';
-        }
-        textElement.appendChild(span);
-        spans.push(span);
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR') {
-      textElement.appendChild(document.createElement('br'));
-    } else {
-      textElement.appendChild(node.cloneNode(true));
-    }
-  });
-
-  let lastActiveIndex = -1;
-  const clearActive = () => spans.forEach((span) => span.classList.remove('active'));
-  const setActiveRange = (index) => {
-    if (index < 0) return;
-    lastActiveIndex = index;
-    clearActive();
-    for (let i = index; i < index + 3 && i < spans.length; i += 1) {
-      spans[i].classList.add('active');
-    }
-  };
-
-  textElement.addEventListener('mousemove', (event) => {
-    const { clientX, clientY } = event;
-    let closestIndex = -1;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    spans.forEach((span, index) => {
-      const rect = span.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const distance = Math.hypot(cx - clientX, cy - clientY);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    setActiveRange(closestIndex);
-  });
-
-  textElement.addEventListener('mouseleave', () => {
-    if (lastActiveIndex >= 0) {
-      setActiveRange(lastActiveIndex);
-    }
-  });
-}
-

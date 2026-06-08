@@ -44,6 +44,10 @@ model Spreadsheet {
   organization   Organization?     @relation(fields: [organizationId], references: [id])
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
+  
+  records        Record[]
+  appConfig      AppConfig?
+  workflows      Workflow[]
 
   @@index([userId])
   @@index([organizationId])
@@ -58,4 +62,41 @@ enum SpreadsheetStatus {
   ANALYZING
   READY
   FAILED
+}
+
+model Record {
+  id             String      @id @default(uuid())
+  data           Json        // Armazena a linha original (chave: valor)
+  spreadsheetId  String
+  spreadsheet    Spreadsheet @relation(fields: [spreadsheetId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([spreadsheetId])
+}
+
+model AppConfig {
+  id             String      @id @default(uuid())
+  systemName     String?
+  themeSetup     Json?       // cor primária, modo claro/escuro, fonte
+  dashboardSetup Json?       // KPIs, gráficos, título
+  formSetup      Json?       // campos, obrigatoriedade, ordem
+  isPublished    Boolean     @default(false)
+  spreadsheetId  String      @unique
+  spreadsheet    Spreadsheet @relation(fields: [spreadsheetId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Workflow {
+  id             String      @id @default(uuid())
+  name           String
+  trigger        Json        // Condição (ex: valor da coluna >= 1000)
+  action         Json        // Ação (ex: enviar email)
+  spreadsheetId  String
+  spreadsheet    Spreadsheet @relation(fields: [spreadsheetId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([spreadsheetId])
 }

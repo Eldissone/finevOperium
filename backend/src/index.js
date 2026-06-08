@@ -6,6 +6,9 @@ import cookieParser from 'cookie-parser';
 import prisma from './lib/db.js';
 import authRoutes from './routes/auth.js';
 import spreadsheetRoutes from './routes/spreadsheets.js';
+import recordsRoutes from './routes/records.js';
+import appConfigRoutes from './routes/appConfig.js';
+import workflowRoutes from './routes/workflows.js';
 import { authMiddleware } from './middleware/authMiddleware.js';
 
 dotenv.config();
@@ -23,6 +26,9 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/spreadsheets', spreadsheetRoutes);
+app.use('/api/spreadsheets/:spreadsheetId/records', recordsRoutes);
+app.use('/api/spreadsheets/:id/config', appConfigRoutes);
+app.use('/api/spreadsheets/:spreadsheetId/workflows', workflowRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
@@ -30,24 +36,32 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/dashboard', authMiddleware, async (req, res) => {
   try {
-    const spreadsheets = await prisma.spreadsheet.findMany({
-      where: { userId: req.user.id },
-      orderBy: { createdAt: 'desc' },
-      take: 5,
-    });
+    const [allSheets, recentSpreadsheets] = await Promise.all([
+      prisma.spreadsheet.findMany({
+        where: { userId: req.user.id },
+        select: { rowCount: true, analysis: true },
+      }),
+      prisma.spreadsheet.findMany({
+        where: { userId: req.user.id },
+        orderBy: { createdAt: 'desc' },
+        take: 12,
+        include: { appConfig: { select: { isPublished: true } } },
+      }),
+    ]);
 
     res.json({
       stats: {
-        spreadsheets: spreadsheets.length,
-        totalRows: spreadsheets.reduce((sum, s) => sum + s.rowCount, 0),
-        lastSector: spreadsheets[0]?.analysis?.sectorLabel || null,
+        spreadsheets: allSheets.length,
+        totalRows: allSheets.reduce((sum, s) => sum + s.rowCount, 0),
+        lastSector: recentSpreadsheets[0]?.analysis?.sectorLabel || null,
       },
-      recentSpreadsheets: spreadsheets.map((s) => ({
+      recentSpreadsheets: recentSpreadsheets.map((s) => ({
         id: s.id,
         fileName: s.fileName,
         rowCount: s.rowCount,
         columnCount: s.columnCount,
         sectorLabel: s.analysis?.sectorLabel,
+        isPublished: s.appConfig?.isPublished ?? false,
         createdAt: s.createdAt,
       })),
     });
