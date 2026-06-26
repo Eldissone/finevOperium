@@ -14,6 +14,12 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..700,0..1&display=swap"
     rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/css/style.css">
+
+  <!-- GSAP MUST be loaded before your script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body class="bg-background text-text min-h-screen flex flex-col relative overflow-x-hidden">
@@ -30,7 +36,8 @@
 
   <!-- Navbar -->
   <header class="fixed top-2 w-full z-50 border-b-0 border-border/40">
-    <div class="navBar rounded-full w-[95%] mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+    <div
+      class="navBar relative rounded-full w-[95%] mx-auto px-6 md:px-12 py-4 flex justify-between items-center overflow-visible">
       <div class="flex items-center justify-center gap-1">
         <div class="h-8 w-8 flex items-center justify-center">
           <img src="./src/assets/icon/Finev-Logo-Icon.png" alt="logo">
@@ -38,16 +45,42 @@
       </div>
       <nav class="nav-links hidden md:flex items-center gap-8 font-sans text-sm font-medium">
         <a href="#" class="text-white hover:text-primary transition-colors">Ia</a>
-        <a href="#" class="text-white hover:text-primary transition-colors">Plataforma</a>
-        <a href="#" class="text-white hover:text-primary transition-colors">Soluções</a>
-        <a href="#" class="text-white hover:text-primary transition-colors">Empresas</a>
-        <a href="#" class="text-white hover:text-primary transition-colors">Sobre</a>
+        <a href="#" class="text-white hover:text-primary transition-colors">Plataform</a>
+        <a href="#" class="text-white hover:text-primary transition-colors">Solution</a>
+        <a href="#" class="text-white hover:text-primary transition-colors">Enterprises</a>
+        <a href="#" class="text-white hover:text-primary transition-colors">About</a>
       </nav>
       <div class="flex items-center gap-4">
         <a href="/src/page/login.html"
-          class="hidden md:block font-sans text-sm font-medium text-white hover:text-text-muted transition-colors">Entrar</a>
+          class="hidden md:block font-sans text-sm font-slim text-white Captalize hover:text-text-muted transition-colors">Sign
+          in</a>
         <a href="/src/page/register.html"
-          class="bg-primary hover:bg-primary/90 text-surface font-sans text-sm font-bold py-2 px-5 rounded-md transition-all shadow-[0_0_15px_rgba(255,122,0,0.3)] hover:shadow-[0_0_25px_rgba(255,122,0,0.5)]">Cadastrar</a>
+          class="bg-primary hover:bg-primary/90 text-surface font-sans Captalize text-sm font-slim py-2 px-5 rounded-md transition-all shadow-[0_0_15px_rgba(255,122,0,0.3)] hover:shadow-[0_0_25px_rgba(255,122,0,0.5)]">Sign
+          up</a>
+        <button id="mobileMenuToggle"
+          class="md:hidden flex items-center justify-center h-11 w-11 rounded-full border border-white/20 text-white hover:bg-white/10 transition">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+
+      <div id="mobileMenu"
+        class="mobile-menu hidden md:hidden absolute left-1/2 top-full mt-3 -translate-x-1/2 w-[calc(100%-2rem)] rounded-3xl bg-slate-950/95 backdrop-blur-2xl border border-white/10 shadow-2xl p-5">
+        <nav class="flex flex-col gap-3">
+          <a href="#" class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">Ia</a>
+          <a href="#"
+            class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">Plataform</a>
+          <a href="#"
+            class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">Solution</a>
+          <a href="#"
+            class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">Enterprises</a>
+          <a href="#"
+            class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">About</a>
+          <a href="/src/page/login.html"
+            class="text-white text-base font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition">Sign in</a>
+          <a href="/src/page/register.html"
+            class="bg-primary hover:bg-primary/90 text-surface text-base font-bold py-3 px-4 rounded-xl transition-all shadow-[0_0_15px_rgba(255,122,0,0.3)] hover:shadow-[0_0_25px_rgba(255,122,0,0.5)]">Sign
+            up</a>
+        </nav>
       </div>
     </div>
   </header>
@@ -60,33 +93,119 @@
 
       <div class="baner">
         <h1 id="text" class="text-white tracking-tight leading-[1.1] mt-6 reveal reveal-delay-1 max-w-full">
-          Build on the Operium
+          Build on the Oper1one
         </h1>
       </div>
-      
-      <p class="font-display text-xl text-white md:text-xl mb-1 mt-10 max-w-2xl">
-        Não precisas mudar o teu fluxo de trabalho, só o inove.
+
+      <p class="font-display text-xl text-white md:text-xl mb-1 mt-10 max-w-2xl  reveal reveal-delay-2">
+        You don't need to change your workflow, just innovate it.
       </p>
 
       <div class="flex flex-col sm:flex-row mt-10  items-center gap-4 reveal reveal-delay-3">
         <a href="#"
-          class="w-full sm:w-auto bg-primary hover:bg-primary/90 text-surface font-sans text-base font-bold py-4 px-8 rounded-lg transition-all shadow-[0_0_20px_rgba(255,122,0,0.4)] hover:shadow-[0_0_35px_rgba(255,122,0,0.6)] flex items-center justify-center gap-2">
-          Comece a Construir
+          class="w-full sm:w-auto bg-primary hover:bg-primary/90 text-surface uppercase font-sans text-base font-slim py-4 px-8 rounded-lg transition-all shadow-[0_0_20px_rgba(255,122,0,0.4)] hover:shadow-[0_0_35px_rgba(255,122,0,0.6)] flex items-center justify-center gap-2">
+          start now
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
         </a>
         <a href="#"
-          class="w-full sm:w-auto glass-panel text-text hover:bg-surface-highlight font-sans text-base font-semibold py-4 px-8 rounded-lg transition-colors flex items-center justify-center">
-          Ler a Documentação
+          class="w-full sm:w-auto glass-panel text-text hover:bg-surface-highlight text-base uppercase font-sans font-slim py-4 px-8 rounded-lg transition-colors flex items-center justify-center">
+          Go docs
         </a>
       </div>
     </section>
 
+    <!-- empresa -->
+    <div class="Empresa-marquee">
+      <h1 class="text-3xl md:text-4xl font-bold">The most innovative companies build on Operium</h1>
+
+      <div aria-hidden="true" class="footer-logos">
+        <div class="marquee-F">
+          <div class="marquee__group">
+            <img src="./src/assets/icon/google.png" alt="google">
+            <img src="./src/assets/icon/MBT_Energia-Logo.png" alt="mbt">
+            <img src="./src/assets/icon/yc1.png" alt="yc">
+            <img src="./src/assets/icon/MINSA.png" alt="GOV MINSA">
+            <img src="./src/assets/icon/OpenAI-Logo.png" alt="openai">
+            <img src="./src/assets/icon/vc.png" alt="vercel">
+            <img src="./src/assets/icon/Finev-Logo-H.jpg" alt="finev">
+            <img src="./src/assets/icon/ds.png" alt="deepseek">
+            <img src="./src/assets/icon/Grupo-Unione_Logo.png" alt="grupounione">
+            <img src="./src/assets/icon/Hostinger.png" alt="Hostinger">
+          </div>
+          <div aria-hidden="true" class="marquee__group">
+            <img src="./src/assets/icon/google.png" alt="google">
+            <img src="./src/assets/icon/MBT_Energia-Logo.png" alt="mbt">
+            <img src="./src/assets/icon/yc1.png" alt="yc">
+            <img src="./src/assets/icon/MINSA.png" alt="GOV MINSA">
+            <img src="./src/assets/icon/OpenAI-Logo.png" alt="openai">
+            <img src="./src/assets/icon/vc.png" alt="vercel">
+            <img src="./src/assets/icon/Finev-Logo-H.jpg" alt="finev">
+            <img src="./src/assets/icon/ds.png" alt="deepseek">
+            <img src="./src/assets/icon/Grupo-Unione_Logo.png" alt="grupounione">
+            <img src="./src/assets/icon/Hostinger.png" alt="Hostinger">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- dashmaket -->
+    <main class="conteiner-Principal">
+
+      <section class="card-section">
+        <div class="horizontal-scroll-wrapper">
+          <h1 class="text-3xl md:text-4xl max-w-7xl text-center font-bold absolute top-24 reveal">Finev Operium interprets how
+            your company already works and generates a modern operational structure without requiring radical changes.
+          </h1>
+          <div class="horizontal-scroll">
+            <div id="image-track">
+              <div class="item">
+                <img class="image" src="./src/assets/image/Office Collaboration Scene.png" draggable="false" alt="" />
+                <div class="card-overlay">
+                  <h3>1</h3>
+                  
+                </div>
+              </div>
+
+              <div class="item">
+                <img class="image" src="./src/assets/image/Focused Tech Engagement.png" draggable="false" alt="" />
+                <div class="card-overlay">
+                  <h3>2</h3>
+                  
+                </div>
+              </div>
+
+              <div class="item">
+                <img class="image" src="./src/assets/image/Creative Workspace Scene.png" draggable="false" alt="" />
+                <div class=" card-overlay">
+                  <h3>3</h3>
+                  
+                </div>
+              </div>
+
+              <div class="item">
+                <img class="image" src="./src/assets/image/Futuristic Data Dashboard.png" draggable="false" alt="" />
+                <div class="card-overlay">
+                  <h3>4</h3>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card-section reveal-next"></section>
+      <section class="card-section reveal-next reveal-next-mobile"></section>
+
+    </main>
+
     <!-- Bento Grid Section -->
-    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <section class="py-24 px-6 md:px-12 max-w-full mx-auto topsec">
       <div class="text-center mb-16 reveal">
-        <h2 class="font-display text-3xl md:text-5xl font-bold mb-4">Arquitetura Inflexível</h2>
-        <p class="text-text-muted max-w-2xl mx-auto">Um kit de ferramentas combináveis desenhado para ambientes
-          corporativos de alto risco.</p>
+        <h1 class="text-3xl md:text-4xl text-center font-bold mb-4 reveal">Built for global corporate
+          infrastructure</h1>
+        <p class="text-text-muted max-w-2xl mx-auto">A kit of combinable tools designed for high-risk corporate
+          environments.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -155,24 +274,30 @@
         </div>
       </div>
     </section>
+
+    <section class="contact">
+
+    </section>
   </main>
 
   <footer class="border-t border-border/50 bg-surface z-10 relative">
     <div class="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="flex items-center gap-2">
-        <div class="h-6 w-6 rounded bg-text-muted flex items-center justify-center text-surface font-bold text-xs">F
+        <span class="font-display text-lg font-bold text-text-muted">finev</span>
+        <div class="h-8 w-8 flex items-center justify-center">
+          <img src="./src/assets/icon/Finev-Logo-Icon.png" alt="logo">
         </div>
-        <span class="font-display text-lg font-bold text-text-muted">Finev Operium</span>
+        <span class="font-display text-lg font-bold text-text-muted">Operium</span>
       </div>
-      <p class="text-xs text-text-muted">© 2024 Finev Operium. Todos os direitos reservados. Construído para
-        infraestrutura corporativa global.</p>
+      <p class="text-xs text-text-muted">© 2026 Finev Operium. All rights reserved. Built for
+        global corporate infrastructure.</p>
     </div>
   </footer>
 
   <script type="module" src="/src/js/main.js"></script>
-  <!-- Lenis (smooth scrolling) - single version -->
+  <script type="module" src="/src/js/scrollAreas.js"></script>
+  <script type="module" src="/src/js/react-mount.tsx"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.umd.js"></script>
-  <!-- GSAP + ScrollTrigger (optional) -->
   <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
   <script>
